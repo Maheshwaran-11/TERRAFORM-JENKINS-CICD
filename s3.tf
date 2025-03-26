@@ -3,6 +3,7 @@ resource "aws_s3_bucket" "mybucket" {
   bucket = var.bucket_name
 }
 
+# Enforce Ownership Controls
 resource "aws_s3_bucket_ownership_controls" "example" {
   bucket = aws_s3_bucket.mybucket.id
   rule {
@@ -10,6 +11,7 @@ resource "aws_s3_bucket_ownership_controls" "example" {
   }
 }
 
+# Block Public Access
 resource "aws_s3_bucket_public_access_block" "example" {
   bucket = aws_s3_bucket.mybucket.id
   block_public_acls       = true
