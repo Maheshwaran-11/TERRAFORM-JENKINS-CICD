@@ -11,10 +11,11 @@ resource "aws_instance" "MK" {
 
 resource "aws_security_group" "ec2_security_group" {
   name        = "mk security group"
-  description = "allow access on ports 80 and 22 and 443"
+  description = "allow access on ports 22, 80, 443, 8080, 3000, and 8081"
 
+  # SSH Access
   ingress {
-    description      = "ssh access"
+    description      = "SSH Access"
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
@@ -22,24 +23,9 @@ resource "aws_security_group" "ec2_security_group" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  # HTTP Access
   ingress {
-    from_port   = 0
-    to_port     = 0    # Allow all ports
-    protocol    = "-1" # All protocols
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description      = "https"
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  ingress {
-    description      = "http"
+    description      = "HTTP Access"
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
@@ -47,6 +33,44 @@ resource "aws_security_group" "ec2_security_group" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  # HTTPS Access
+  ingress {
+    description      = "HTTPS Access"
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  # Port 8080
+  ingress {
+    description      = "App Access on Port 8080"
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  # Port 3000
+  ingress {
+    description      = "App Access on Port 3000"
+    from_port        = 3000
+    to_port          = 3000
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  # Port 8081
+  ingress {
+    description      = "App Access on Port 8081"
+    from_port        = 8081
+    to_port          = 8081
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  # Allow all egress traffic
   egress {
     from_port        = 0
     to_port          = 0
