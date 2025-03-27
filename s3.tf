@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "mybucket" {
-  provider = aws.euwest2
+  provider = aws.useast1
   bucket = var.bucket_name
 }
 

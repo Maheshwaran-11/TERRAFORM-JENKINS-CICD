@@ -9,11 +9,6 @@ terraform {
 }
 
 provider "aws" {
+  alias  = "useast1"
   region = var.aws_region
-}
-
-# Additional provider for us-east-1 region
-provider "aws" {
-  alias  = "euwest2"
-  region = "eu-west-2"
 }
