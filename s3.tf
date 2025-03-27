@@ -1,10 +1,9 @@
 resource "aws_s3_bucket" "mybucket" {
-  provider = aws
+  provider = aws.useast1
   bucket = var.bucket_name
 }
 
 resource "aws_s3_bucket_ownership_controls" "example" {
-  provider = aws
   bucket = aws_s3_bucket.mybucket.id
   rule {
     object_ownership = "BucketOwnerPreferred"
@@ -12,7 +11,6 @@ resource "aws_s3_bucket_ownership_controls" "example" {
 }
 
 resource "aws_s3_bucket_public_access_block" "example" {
-  provider = aws
   bucket = aws_s3_bucket.mybucket.id
   block_public_acls       = false
   block_public_policy     = false
@@ -21,7 +19,6 @@ resource "aws_s3_bucket_public_access_block" "example" {
 }
 
 resource "aws_s3_bucket_acl" "example" {
-  provider = aws
   depends_on = [
     aws_s3_bucket_ownership_controls.example,
     aws_s3_bucket_public_access_block.example,
@@ -32,44 +29,39 @@ resource "aws_s3_bucket_acl" "example" {
 
 # Upload static files
 resource "aws_s3_object" "index" {
-  provider = aws
   bucket = aws_s3_bucket.mybucket.id
-  key = "index.html"
+  key    = "index.html"
   source = "index.html"
-  acl = "public-read"
+  acl    = "public-read"
   content_type = "text/html"
 }
 
 resource "aws_s3_object" "error" {
-  provider = aws
   bucket = aws_s3_bucket.mybucket.id
-  key = "error.html"
+  key    = "error.html"
   source = "error.html"
-  acl = "public-read"
+  acl    = "public-read"
   content_type = "text/html"
 }
 
 resource "aws_s3_object" "style" {
-  provider = aws
   bucket = aws_s3_bucket.mybucket.id
-  key = "style.css"
+  key    = "style.css"
   source = "style.css"
-  acl = "public-read"
+  acl    = "public-read"
   content_type = "text/css"
 }
 
 resource "aws_s3_object" "script" {
-  provider = aws
   bucket = aws_s3_bucket.mybucket.id
-  key = "script.js"
+  key    = "script.js"
   source = "script.js"
-  acl = "public-read"
+  acl    = "public-read"
   content_type = "text/javascript"
 }
 
 # Configure S3 bucket as a website
 resource "aws_s3_bucket_website_configuration" "website" {
-  provider = aws
   bucket = aws_s3_bucket.mybucket.id
   index_document {
     suffix = "index.html"
